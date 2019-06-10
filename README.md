@@ -30,7 +30,7 @@ The ip addresses of the container can be found using this command
 
 *inspect docker inspect <container_name> | grep -i ipaddress*
 
-**Warning : ** You cannont reach the reverse proxy using the IP address.
+**Warning :** You cannont reach the reverse proxy using the IP address.
 
 This is beacause our default configuration in *000-default.conf* is empty to ensure you access the sites through the url.
 
