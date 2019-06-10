@@ -3,22 +3,51 @@
 
 Link to Teaching Repo : https://github.com/SoftEng-HEIGVD/Teaching-HEIGVD-RES-2019-Labo-HTTPInfra
 
-# Step 1: Static HTTP server with apache httpd
+## Step 1: Static HTTP server with apache httpd
 
 *placeholder*
 
-# Step 2: Dynamic HTTP server with express.js
+## Step 2: Dynamic HTTP server with express.js
 
 *placeholder*
 
-# Step 3: Reverse proxy with apache (static configuration)
+## Step 3: Reverse proxy with apache (static configuration)
+
+Initially we run these 4 docker commands to start up the required containers.
+
+```dockerRun
+$ docker run -d --name apache_static res/apache_php
+$ docker run -d --name express_dynamic res/express_movies
+$ docker build -t res/apache_rp .
+$ docker run -d --name apache_rp res/apache_rp
+```
+
+Assuming the staticly assigned IPs have not changed you should be ready to access the two sites via the reverse proxy.
+Otherwise they will have to be changed in this file *001-reverse-proxy.conf*
+
+The ip addresses of the container can be found using this command
+*inspect docker inspect <container_name> | grep -i ipaddress*
+
+**Warning : ** You cannont reach the reverse proxy using the IP address.
+This is beacause our default configuration in *000-default.conf* is empty to ensure you access the sites through the url.
+
+To access the server via a browser we have to add a line in our DNS configuration.
+Access the file with the following command
+```bash
+$ sudo nano /etc/hosts
+```
+and add *172.17.0.4	demo.res.ch* to the file.
+
+This is a stopgap solution as the ip should be added dynamically since it may differ depending on the order we activated the containers and if any were running before.
+
+To test the proxy all you need to do is launch a browser and type *demo.res.ch:8080* in the search bar to access the *apache_static* content.
+Type *demo.res.ch:8080/api/movies/* to access the *express_dynamic* content.
+
+
+## Step 4: AJAX requests with JQuery
 
 *placeholder*
 
-# Step 4: AJAX requests with JQuery
-
-*placeholder*
-
-# Step 5: Dynamic reverse proxy configuration
+## Step 5: Dynamic reverse proxy configuration
 
 *placeholder*
