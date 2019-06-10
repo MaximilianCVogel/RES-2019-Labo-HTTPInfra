@@ -2,7 +2,7 @@ $(function() {
 	console.log("loading students");
 	
 	function loadStudents() {
-		$.getJSON( "/api/studens/", function( students ) {
+		$.getJSON( "/api/students/", function( students ) {
 			console.log(students);
 			var message = "Nobody is here";
 			if( students.length > 0 ) {
