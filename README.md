@@ -52,7 +52,43 @@ Type *demo.res.ch:8080/api/students/* to access the *express_dynamic* content.
 
 ## Step 4: AJAX requests with JQuery
 
-*placeholder*
+For this step we "created" a javascript file called students.js
+
+```javascript
+$(function() {
+	console.log("loading students");
+	
+	function loadStudents() {
+		$.getJSON( "/api/studens/", function( students ) {
+			console.log(students);
+			var message = "Nobody is here";
+			if( students.length > 0 ) {
+				message = students[0].firstName + " " + students[0].lastName;
+			}
+			$(".skills").text(message);
+		});
+	};
+	
+	loadStudents();
+	setInterval( loadStudents, 2000 );
+});
+```
+
+and added two lines to the *index.html* file.
+
+The first to add our custom script and the seccond, added in the intro content, to display the result of the ajax request.
+
+```html
+<script src="js/students.js"></script>
+
+<span class="skills">HTTP fluff text!</span>
+```
+
+To test this simply get to the *apache_static* content the same way as in step 3 and now you can a randomly generated name under the text *Le cours de RES c'est fun!*.
+
+To prove the request is dynamic, the script requests a new student list every 2 secconds.
+
+As you can see the name chages without having to reload the whole page.
 
 ## Step 5: Dynamic reverse proxy configuration
 
