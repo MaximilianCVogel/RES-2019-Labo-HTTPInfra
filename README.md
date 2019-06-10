@@ -48,7 +48,7 @@ This is a stopgap solution as the ip should be added dynamically since it may di
 
 To test the proxy all you need to do is launch a browser and type *demo.res.ch:8080* in the search bar to access the *apache_static* content.
 
-Type *demo.res.ch:8080/api/movies/* to access the *express_dynamic* content.
+Type *demo.res.ch:8080/api/students/* to access the *express_dynamic* content.
 
 ## Step 4: AJAX requests with JQuery
 
