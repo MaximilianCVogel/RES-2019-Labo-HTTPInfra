@@ -93,3 +93,18 @@ As you can see the name chages without having to reload the whole page.
 ## Step 5: Dynamic reverse proxy configuration
 
 *placeholder*
+
+## Additional Steps
+
+### Management UI
+
+For the management UI, we chose to use [Portainer](https://portainer.io/) as we found it to be the easiest to implement.
+
+To run Portainer, use the following commands : 
+
+```bash
+$ docker volume create portainer_data
+$ docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock -v portainer_data:/data portainer/portainer
+```
+
+You should now be able to access the docker container via your browser on port 9000.
