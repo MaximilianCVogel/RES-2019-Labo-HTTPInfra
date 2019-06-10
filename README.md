@@ -110,7 +110,33 @@ As you can see the name chages without having to reload the whole page.
 
 ## Step 5: Dynamic reverse proxy configuration
 
-*placeholder*
+For this step we wanted to make both our static and dynamic web content available through our reverse proxy, without hard-coding IP adresses in config files. To achieve this we used environnement variables that we pass to the reverse proxy container when we run it using the -e option. These environnement variables are then used in a php-template file so that our address is mapped to the right docker web servers we created.
+
+We first have to create the images from each servers folder:
+
+```dockerRun
+$ cd apache-php-image
+$ docker build -t res/apache_php .
+$ cd ../apache-reverse-proxy
+$ docker build -t res/apache_rp .
+$ cd ../express-image
+$ docker build -t res/express_students .
+```
+
+We then create a bunch of containers to switch up the ip addresses and name two of them to inspect their IPs. We then use these two IP addresses to give to the reverse proxy server. These two servers will be accessed through our browser at the demo.res.ch address, where we'll see the Static website, modified by json payload regularly(if no other containers are running, then the addresses for the last run command should be the same).
+
+```dockerRun
+$ docker run -d res/apache_php
+$ docker run -d res/apache_php
+$ docker run -d res/apache_php
+$ docker run -d --name apache_static res/apache_php
+$ docker run -d res/express_students
+$ docker run -d res/express_students
+$ docker run -d --name express_dynamic res/express_students
+$ inspect express_dynamic | grep -i ipaddr
+$ docker inspect apache_static | grep -i ipaddr
+$ docker run -d -e STATIC_APP=172.17.0.5:80 -e DYNAMIC_APP=172.17.0.8:3000 --name apache_rp -p 8080:80 res/apache_rp
+```
 
 ## Additional Steps
 
