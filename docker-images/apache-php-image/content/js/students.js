@@ -13,4 +13,5 @@ $(function() {
 	};
 	
 	loadStudents();
+	setInterval( loadStudents, 2000 );
 });
