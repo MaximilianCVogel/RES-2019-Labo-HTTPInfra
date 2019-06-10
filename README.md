@@ -5,11 +5,29 @@ Link to Teaching Repo : https://github.com/SoftEng-HEIGVD/Teaching-HEIGVD-RES-20
 
 ## Step 1: Static HTTP server with apache httpd
 
-*placeholder*
+To access our webpage we need to first build the image from our Dockerfile, run a container using that image and then finally access the web content. The Dockerfile for this server simply specifies that we want to use the official apache server image as a base (FROM) and that we want the container to copy (COPY) the content/ folder to its own /var/www/html/ folder. That folder will allow the server to display the webpage index.html.
+
+After cloning the repo, build the image and run a container using the following commands while in the docker-images/apache-php-image/ folder :
+
+```dockerRun
+$ docker build -t res/apache_php .
+$ docker run -d -p 9090:80 res/apache_php
+```
+
+The page is now accessible through the browser by going to Docker-machine's IP address and specifying the port, which is most likely this address : 192.168.99.100:9090
 
 ## Step 2: Dynamic HTTP server with express.js
 
-*placeholder*
+After creating a static web page we now want to create a dynamic web page using node.js and the chance module (to generate random values for our content). This server will be able to reply to requests by sending a .json payload.
+
+Same as before, we used a Dockerfile coupled with copying the src/ folder found in the docker-images/express-image/ folder into the container to create our desired server.
+
+```dockerRun
+$ docker build -t res/express_students .
+$ docker run -d -p 9090:3000 res/express_students
+```
+
+By going to Docker-machine's IP address and specifying the port 9090 this time (which we mapped to the container 3000 port with the run command), we'll display a randomly generated .json package every time we refresh.
 
 ## Step 3: Reverse proxy with apache (static configuration)
 
